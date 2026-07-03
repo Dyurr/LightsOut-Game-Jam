@@ -1,15 +1,20 @@
 using UnityEngine;
-
+using TMPro;
 public class PlayerInteract : MonoBehaviour
 {
     
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private TextMeshProUGUI interactPromptText;
 
     private Item itemTarget;
 
 
+    private void Start()
+    {
+        interactPromptText.gameObject.SetActive(false); // Initially hide the prompt
+    }
 
     private void Update()
     {
@@ -36,6 +41,7 @@ public class PlayerInteract : MonoBehaviour
         {
             itemTarget = null;
         }
+        interactPromptText.gameObject.SetActive(itemTarget != null);
     }
     
     private void InteractWithItem()
@@ -44,6 +50,7 @@ public class PlayerInteract : MonoBehaviour
         {
             itemTarget.Interact();
             itemTarget = null; // Reset the target after interaction
+            interactPromptText.gameObject.SetActive(false);
         }
     }
 
