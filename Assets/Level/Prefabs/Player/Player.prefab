@@ -187,6 +187,8 @@ GameObject:
   - component: {fileID: 667111075247468871}
   - component: {fileID: 3297536845006414657}
   - component: {fileID: 8553845318185642263}
+  - component: {fileID: 4689024501548653716}
+  - component: {fileID: 7252484820326069812}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -264,3 +266,32 @@ MonoBehaviour:
     m_Bits: 1024
   orientation: {fileID: 5289938492720217887}
   state: 0
+--- !u!114 &4689024501548653716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370922736951444755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d4ae5152e584949ae4d2b3763fd537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWallet
+--- !u!114 &7252484820326069812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370922736951444755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a53e5019040b5c47860d3ce188d82e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
+  playerCamera: {fileID: 0}
+  interactDistance: 3
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 512

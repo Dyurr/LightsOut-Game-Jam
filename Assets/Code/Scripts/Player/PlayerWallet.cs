@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 public class PlayerWallet : MonoBehaviour
 {
     public int totalCash { get; private set; }
@@ -20,6 +20,7 @@ public class PlayerWallet : MonoBehaviour
         totalCash += amount;
         onCashAdded?.Invoke(amount);
         onCashChanged?.Invoke(totalCash);
+        Debug.Log($"Cash added: {amount}, Total: {totalCash}");
     }
 }
 
