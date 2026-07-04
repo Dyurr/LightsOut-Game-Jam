@@ -43,7 +43,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float noiseCooldown = 0.5f;
 
 
+    [Header("Collision Noise")]
+    [SerializeField] private float collisionNoiseRadius = 6f;
+    [SerializeField] private float collisionNoiseCooldown = 1f;
+    [SerializeField] private float collisionNoiseThreshold = 2f; // Minimum collision force to trigger noise
+    [SerializeField] private LayerMask collisionNoiseLayers; // Layers that can trigger collision noise
+
     private float noiseTimer = 0f;
+    private float collisionNoiseTimer = 0f;
 
     public MovementState state;
     public enum MovementState
@@ -71,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         StateHandler();
         HandleFootstepNoise();
+
+        if (collisionNoiseTimer > 0f)
+        {
+            collisionNoiseTimer -= Time.deltaTime;
+        }
 
         if(grounded)
             rb.linearDamping = groundDrag;
@@ -179,6 +191,16 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((noiseCollisionLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+        if (collision.relativeVelocity.magnitude < minCollisionForce) return;
+        if (collisionNoiseTimer > 0f) return;
+
+        NoiseSystem.MakeNoise(transform.position, collisionNoiseRadius);
+        collisionNoiseTimer = collisionNoiseCooldown;
     }
 
 }
