@@ -199,7 +199,10 @@ public class PlayerMovement : MonoBehaviour
         if (collision.relativeVelocity.magnitude < minCollisionForce) return;
         if (collisionNoiseTimer > 0f) return;
 
-        NoiseSystem.MakeNoise(transform.position, collisionNoiseRadius);
+        float forceMultiplier = Mathf.Clamp(collision.relativeVelocity.magnitude / 10f, 0.5f, 2f);
+        float finalRadius = collisionNoiseRadius * forceMultiplier;
+
+        NoiseSystem.MakeNoise(transform.position, finalRadius);
         collisionNoiseTimer = collisionNoiseCooldown;
     }
 
