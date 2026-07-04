@@ -68,6 +68,7 @@ public class FlashlightController : MonoBehaviour
     {
         if (!IsFlashlightOn && CurrentBattery <= 0f) return; // block turning on with no battery
             SetFlashlight(!IsFlashlightOn);
+            NoiseSystem.MakeNoise(transform.position, 3f); // Make noise when toggling flashlight
     }
 
     private void SetFlashlight(bool state)

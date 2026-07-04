@@ -5,7 +5,7 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
-    private enum State { Patrolling, Chasing, Attacking }
+    private enum State { Patrolling, Investigating, Chasing, Attacking }
 
     private NavMeshAgent agent;
     private Transform playerTransform;
@@ -19,7 +19,14 @@ public class EnemyAI : MonoBehaviour
     public Collider killCollider;
     public List<Transform> waypoints = new List<Transform>();
 
+    [Header("Noise Response")]
+    public float investigateWaitTime = 3f;
+    public float investigateMoveSpeedMultiplier = 1.2f;
+
+    private Vector3 investigateTarget;
+
     public bool IsPatrolling => currentState == State.Patrolling;
+    public bool IsInvestigating => currentState == State.Investigating;
     public bool IsChasing => currentState == State.Chasing;
     public bool IsAttacking => currentState == State.Attacking;
 
@@ -50,6 +57,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        NoiseSystem.OnNoiseMade += HandleNoise;
+    }
+
+    void OnDisable()
+    {
+        NoiseSystem.OnNoiseMade -= HandleNoise;
+    }
+
     void Start()
     {
         if (agent == null) return;
@@ -59,7 +76,26 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         if (agent == null) return;
-        agent.speed = currentState == State.Chasing ? moveSpeed * chaseMultiplier : moveSpeed;
+
+        if (currentState == State.Chasing)
+            agent.speed = moveSpeed * chaseMultiplier;
+        else if (currentState == State.Investigating)
+            agent.speed = moveSpeed * investigateMoveSpeedMultiplier;
+        else
+            agent.speed = moveSpeed;
+    }
+
+    private void HandleNoise(Vector3 position, float radius)
+    {
+        // Don't get distracted by noise if already actively chasing or attacking
+        if (currentState == State.Chasing || currentState == State.Attacking) return;
+
+        float distance = Vector3.Distance(transform.position, position);
+        if (distance <= radius)
+        {
+            investigateTarget = position;
+            currentState = State.Investigating;
+        }
     }
 
     private IEnumerator StateMachine()
@@ -70,6 +106,10 @@ public class EnemyAI : MonoBehaviour
             {
                 case State.Patrolling:
                     yield return PatrolStep();
+                    break;
+
+                case State.Investigating:
+                    yield return InvestigateStep();
                     break;
 
                 case State.Chasing:
@@ -109,6 +149,31 @@ public class EnemyAI : MonoBehaviour
         if (currentState == State.Patrolling)
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+        }
+    }
+
+    private IEnumerator InvestigateStep()
+    {
+        agent.SetDestination(investigateTarget);
+
+        // travel to the noise location
+        while (currentState == State.Investigating &&
+               Vector3.Distance(transform.position, investigateTarget) > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        // arrived, look around for a bit
+        float timer = 0f;
+        while (currentState == State.Investigating && timer < investigateWaitTime)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (currentState == State.Investigating)
+        {
+            currentState = State.Patrolling;
         }
     }
 
@@ -170,7 +235,6 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator ResetAfterAttack()
     {
-        // Placeholder delay to represent an attack animation/cooldown.
         yield return new WaitForSeconds(1f);
         currentState = State.Patrolling;
     }
