@@ -35,6 +35,16 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+
+    [Header("Noise Settings")]
+    [SerializeField] private float walkNoiseRadius = 5f;
+    [SerializeField] private float sprintNoiseRadius = 10f;
+    [SerializeField] private float crouchNoiseRadius = 2f;
+    [SerializeField] private float noiseCooldown = 0.5f;
+
+
+    private float noiseTimer = 0f;
+
     public MovementState state;
     public enum MovementState
     {
@@ -60,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        HandleFootstepNoise();
 
         if(grounded)
             rb.linearDamping = groundDrag;
@@ -137,6 +148,37 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
+    }
+
+
+    private void HandleFootstepNoise()
+    {
+        bool isMoving = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z).magnitude > 0.1f;
+
+        if (!grounded || !isMoving)
+        {
+            noiseTimer = 0f;
+            return;
+        }
+
+        noiseTimer -= Time.deltaTime;
+
+        if (noiseTimer <= 0f)
+        {
+           float radius = state switch
+            {
+                MovementState.walking => walkNoiseRadius,
+                MovementState.sprinting => sprintNoiseRadius,
+                MovementState.crouching => crouchNoiseRadius,
+                _ => 0f
+            };
+
+            NoiseSystem.MakeNoise(transform.position, radius);
+            noiseTimer = noiseCooldown;
+        }
+
+
+
     }
 
 }
