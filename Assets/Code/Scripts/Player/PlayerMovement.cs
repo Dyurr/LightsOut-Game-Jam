@@ -44,10 +44,10 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Collision Noise")]
-    [SerializeField] private float collisionNoiseRadius = 6f;
+    [SerializeField] private float collisionNoiseRadius = 10f;
     [SerializeField] private float collisionNoiseCooldown = 1f;
-    [SerializeField] private float collisionNoiseThreshold = 2f; // Minimum collision force to trigger noise
-    [SerializeField] private LayerMask collisionNoiseLayers; // Layers that can trigger collision noise
+    [SerializeField] private float minCollisionForce = 2f;
+    [SerializeField] private LayerMask whatIsFloor; // Layers that can trigger collision noise
 
     private float noiseTimer = 0f;
     private float collisionNoiseTimer = 0f;
@@ -195,11 +195,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if ((noiseCollisionLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+        if ((whatIsFloor.value & (1 << collision.gameObject.layer)) != 0) return;
         if (collision.relativeVelocity.magnitude < minCollisionForce) return;
         if (collisionNoiseTimer > 0f) return;
+        if (state == MovementState.crouching) return; // no sound if crouch
 
-        float forceMultiplier = Mathf.Clamp(collision.relativeVelocity.magnitude / 10f, 0.5f, 2f);
+        float forceMultiplier = Mathf.Clamp(collision.relativeVelocity.magnitude / 10f, 0.8f, 2f); 
         float finalRadius = collisionNoiseRadius * forceMultiplier;
 
         NoiseSystem.MakeNoise(transform.position, finalRadius);
