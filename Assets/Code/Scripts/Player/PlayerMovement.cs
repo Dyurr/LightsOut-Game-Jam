@@ -35,6 +35,23 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+
+    [Header("Noise Settings")]
+    [SerializeField] private float walkNoiseRadius = 5f;
+    [SerializeField] private float sprintNoiseRadius = 10f;
+    [SerializeField] private float crouchNoiseRadius = 2f;
+    [SerializeField] private float noiseCooldown = 0.5f;
+
+
+    [Header("Collision Noise")]
+    [SerializeField] private float collisionNoiseRadius = 10f;
+    [SerializeField] private float collisionNoiseCooldown = 1f;
+    [SerializeField] private float minCollisionForce = 2f;
+    [SerializeField] private LayerMask whatIsFloor; // Layers that can trigger collision noise
+
+    private float noiseTimer = 0f;
+    private float collisionNoiseTimer = 0f;
+
     public MovementState state;
     public enum MovementState
     {
@@ -60,6 +77,12 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        HandleFootstepNoise();
+
+        if (collisionNoiseTimer > 0f)
+        {
+            collisionNoiseTimer -= Time.deltaTime;
+        }
 
         if(grounded)
             rb.linearDamping = groundDrag;
@@ -137,6 +160,51 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
+    }
+
+
+    private void HandleFootstepNoise()
+    {
+        bool isMoving = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z).magnitude > 0.1f;
+
+        if (!grounded || !isMoving)
+        {
+            noiseTimer = 0f;
+            return;
+        }
+
+        noiseTimer -= Time.deltaTime;
+
+        if (noiseTimer <= 0f)
+        {
+           float radius = state switch
+            {
+                MovementState.walking => walkNoiseRadius,
+                MovementState.sprinting => sprintNoiseRadius,
+                MovementState.crouching => crouchNoiseRadius,
+                _ => 0f
+            };
+
+            NoiseSystem.MakeNoise(transform.position, radius);
+            noiseTimer = noiseCooldown;
+        }
+
+
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((whatIsFloor.value & (1 << collision.gameObject.layer)) != 0) return;
+        if (collision.relativeVelocity.magnitude < minCollisionForce) return;
+        if (collisionNoiseTimer > 0f) return;
+        if (state == MovementState.crouching) return; // no sound if crouch
+
+        float forceMultiplier = Mathf.Clamp(collision.relativeVelocity.magnitude / 10f, 0.8f, 2f); 
+        float finalRadius = collisionNoiseRadius * forceMultiplier;
+
+        NoiseSystem.MakeNoise(transform.position, finalRadius);
+        collisionNoiseTimer = collisionNoiseCooldown;
     }
 
 }
