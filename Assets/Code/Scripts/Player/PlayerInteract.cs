@@ -16,13 +16,30 @@ public class PlayerInteract : MonoBehaviour
         interactPromptText.gameObject.SetActive(false); // Initially hide the prompt
     }
 
-    private void Update()
+private void Update()
     {
+        Item previousTarget = itemTarget;
         CheckForInteractable();
-        if (Input.GetKeyDown(KeyCode.E) && itemTarget != null)
+
+        if (itemTarget != previousTarget)
         {
-            InteractWithItem();
+            previousTarget?.CancelHolding();
+            itemTarget?.SetProgressBar(HUDController.Instance.InteractProgressBar);
         }
+
+        if (itemTarget != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                itemTarget.StartHolding();
+
+            if (Input.GetKey(KeyCode.E))
+                itemTarget.TickHolding(Time.deltaTime);
+            else
+                itemTarget.CancelHolding();
+        }
+
+        interactPromptText.text = itemTarget != null ? itemTarget.InteractionPrompt : "";
+        interactPromptText.gameObject.SetActive(itemTarget != null);
     }
 
 
@@ -34,24 +51,9 @@ public class PlayerInteract : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, interactDistance, interactableLayer))
-        {
             itemTarget = hit.collider.GetComponent<Item>();
-        }
         else
-        {
             itemTarget = null;
-        }
-        interactPromptText.gameObject.SetActive(itemTarget != null);
-    }
-    
-    private void InteractWithItem()
-    {
-        if (itemTarget != null)
-        {
-            itemTarget.Interact();
-            itemTarget = null; // Reset the target after interaction
-            interactPromptText.gameObject.SetActive(false);
-        }
     }
 
 }

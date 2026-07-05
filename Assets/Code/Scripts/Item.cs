@@ -61,7 +61,7 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         PlayerWallet.Instance.AddCash(cashValue);
         NoiseSystem.MakeNoise(transform.position, 2f); // Make noise when picking up item

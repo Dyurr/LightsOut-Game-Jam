@@ -1,10 +1,21 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
    [SerializeField] private TextMeshProUGUI cashAddedText;
    [SerializeField] private TextMeshProUGUI totalCashText;
 
+    [SerializeField] private Slider interactProgressBar;
+
+    public static HUDController Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public Slider InteractProgressBar => interactProgressBar;
 
    private void OnEnable()
    {
@@ -39,8 +50,8 @@ public class HUDController : MonoBehaviour
 
     private void Start()
     {
-        cashAddedText.gameObject.SetActive(false); // Initially hide the cash added text
-        // Initialize the total cash display at the start
+        cashAddedText.gameObject.SetActive(false); 
+        interactProgressBar.gameObject.SetActive(false);
         UpdateTotalCashText(PlayerWallet.Instance.totalCash);
     }
 
