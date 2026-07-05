@@ -35,6 +35,18 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    [Header("Functional Options")]
+    [SerializeField] private bool useFootsteps = true;
+
+    [Header("Footstep Parameters")]
+    [SerializeField] private float baseStepSpeed = 0.5f;
+    [SerializeField] private float crouchStepMultiplier = 1.5f;
+    [SerializeField] private float sprintStepMultiplier = 0.6f;
+    [SerializeField] private AudioSource footstepAudioSource = default;
+    [SerializeField] private AudioClip[] walkCrouchClips = default;
+    [SerializeField] private AudioClip[] sprintClips = default;
+    // private float footstepTimer = 0;
+    private float GetCurrentOffset => state == MovementState.crouching ? baseStepSpeed * crouchStepMultiplier : state == MovementState.sprinting ? baseStepSpeed * sprintStepMultiplier : baseStepSpeed;
 
     [Header("Noise Settings")]
     [SerializeField] private float walkNoiseRadius = 5f;
@@ -77,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-        HandleFootstepNoise();
+        
 
         if (collisionNoiseTimer > 0f)
         {
@@ -88,6 +100,11 @@ public class PlayerMovement : MonoBehaviour
             rb.linearDamping = groundDrag;
         else
             rb.linearDamping = 0;
+
+        if (useFootsteps)
+        {
+            HandleFootstepNoise();
+        }
     }
 
     private void FixedUpdate()
@@ -177,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (noiseTimer <= 0f)
         {
+            // Tom's code for noise detection
            float radius = state switch
             {
                 MovementState.walking => walkNoiseRadius,
@@ -186,7 +204,16 @@ public class PlayerMovement : MonoBehaviour
             };
 
             NoiseSystem.MakeNoise(transform.position, radius);
-            noiseTimer = noiseCooldown;
+            noiseTimer = GetCurrentOffset;
+
+            // Sam's code for playing noises
+            if (state == MovementState.sprinting){
+                footstepAudioSource.PlayOneShot(sprintClips[Random.Range(0, sprintClips.Length - 1)]);
+            }
+            else
+            {
+                footstepAudioSource.PlayOneShot(walkCrouchClips[Random.Range(0, walkCrouchClips.Length - 1)]);
+            }
         }
 
 
