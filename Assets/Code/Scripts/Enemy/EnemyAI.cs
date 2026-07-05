@@ -24,6 +24,7 @@ public class EnemyAI : MonoBehaviour
     public float investigateMoveSpeedMultiplier = 1.2f;
 
     private Vector3 investigateTarget;
+    private Animator anim;
 
     public bool IsPatrolling => currentState == State.Patrolling;
     public bool IsInvestigating => currentState == State.Investigating;
@@ -32,6 +33,13 @@ public class EnemyAI : MonoBehaviour
 
     void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+        if (anim == null)
+        {
+            Debug.LogWarning($"{name}: No Animator found. Animations will not play.", this);
+        }
+
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
@@ -83,6 +91,17 @@ public class EnemyAI : MonoBehaviour
             agent.speed = moveSpeed * investigateMoveSpeedMultiplier;
         else
             agent.speed = moveSpeed;
+
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        if (anim == null) return;
+
+        float normalizedSpeed = agent.velocity.magnitude / (moveSpeed * chaseMultiplier);
+        anim.SetFloat("Speed", normalizedSpeed);
+        anim.speed = agent.velocity.magnitude > 0.1f ? 1f : 0f;
     }
 
     private void HandleNoise(Vector3 position, float radius)
@@ -228,7 +247,8 @@ public class EnemyAI : MonoBehaviour
         if (currentState == State.Attacking) return;
 
         currentState = State.Attacking;
-        Debug.Log("Player has been killed by the enemy!");
+        if (anim != null) anim.SetTrigger("Attack");
+            Debug.Log("Player has been killed by the enemy!");
 
         StartCoroutine(ResetAfterAttack());
     }
