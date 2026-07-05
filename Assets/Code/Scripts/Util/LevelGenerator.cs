@@ -5,6 +5,10 @@ using Unity.AI.Navigation;
 
 public class LevelGenerator : MonoBehaviour
 {
+    [Header("Player")]
+    [SerializeField] private GameObject playerPrefab;
+
+
     [Header("Rooms")]
     [SerializeField] private GameObject starterRoomPrefab;
     [SerializeField] private List<GameObject> roomPrefabs; // pool for hallways/bedrooms etc
@@ -44,6 +48,16 @@ private void Start()
     }
 
     GameObject starterRoom = Instantiate(starterRoomPrefab, Vector3.zero, Quaternion.identity);
+
+
+    /// Player Spawn
+    Transform playerSpawn = starterRoom.transform.Find("SpawnPoint");
+
+    if (playerSpawn != null && playerPrefab != null)
+    {
+        Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+    }
+
     placedRoomBounds.Add(GetRoomBounds(starterRoom));
     SpawnValuables(starterRoom);
     totalRoomsSpawned++;
