@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 506371016}
   - component: {fileID: 506371015}
   - component: {fileID: 506371014}
+  - component: {fileID: 506371017}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -211,6 +212,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506371017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506371013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &841217119
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,12 +412,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b8e8f3bcdbcb4fb1dfaf499652c44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  startRoomPrefab: {fileID: 1962021578509677108, guid: 24b8906c69c76e146b9e4b7bc9b086a3, type: 3}
-  starterConnections: []
+  starterRoomPrefab: {fileID: 6200538595792967397, guid: 50f586ad2e0b48e4e9165682ab4f3361, type: 3}
+  roomPrefabs:
+  - {fileID: 5322990959754065348, guid: d4a4cbe25c319bd43bd6d0872fc8be2a, type: 3}
+  - {fileID: 1962021578509677108, guid: 24b8906c69c76e146b9e4b7bc9b086a3, type: 3}
+  - {fileID: 5439318087048956392, guid: 76f03b47e299dda4eb49c171cc6ba253, type: 3}
+  - {fileID: 5586349238200970784, guid: 19a67878df1a01c4e95bcca3c54ec4c3, type: 3}
+  - {fileID: 5565478283664661093, guid: 037891eb84db7ab4ca8c5c10b17ae869, type: 3}
+  - {fileID: 7804977481272207494, guid: 4f16cdef02e8e3942a67e26f7afe45a2, type: 3}
+  endRoomPrefab: {fileID: 5355269804950970276, guid: 206e91ae7880774468a4bc7127a88fb7, type: 3}
   wallCapPrefab: {fileID: 6171150641940509250, guid: f64e1e5c03d912b4c8816d388ff9ea8c, type: 3}
+  minDeadEndDepth: 1
+  maxDeadEndDepth: 5
+  minExitDepth: 3
+  maxExitDepth: 5
+  maxTotalRooms: 30
   itemPrefabs:
   - {fileID: 176346380637014204, guid: cd638ecfa18a7744cb85fc1d3835e84f, type: 3}
-  itemSpawnChance: 0.5
+  spawnChance: 0.5
+  navMeshSurface: {fileID: 0}
 --- !u!4 &957887068
 Transform:
   m_ObjectHideFlags: 0
