@@ -483,18 +483,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 358883169820805606, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -22.13331
-      objectReference: {fileID: 0}
-    - target: {fileID: 358883169820805606, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.8712338
-      objectReference: {fileID: 0}
-    - target: {fileID: 2723061803807680291, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.0934563
-      objectReference: {fileID: 0}
     - target: {fileID: 4557002286298098396, guid: 420b280165a832b4b9774cb25357645b, type: 3}
       propertyPath: m_Name
       value: DungeonSkeleton_demo
@@ -538,38 +526,6 @@ PrefabInstance:
     - target: {fileID: 5556792141643991718, guid: 420b280165a832b4b9774cb25357645b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6539606680446186194, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d276ee6f08a966b459fa772531be2847, type: 2}
-    - target: {fileID: 6539606680446186194, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d276ee6f08a966b459fa772531be2847, type: 2}
-    - target: {fileID: 6898606628010835910, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.1333115
-      objectReference: {fileID: 0}
-    - target: {fileID: 6898606628010835910, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -18.128767
-      objectReference: {fileID: 0}
-    - target: {fileID: 7398728997742244824, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.4666443
-      objectReference: {fileID: 0}
-    - target: {fileID: 7398728997742244824, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 30.760122
-      objectReference: {fileID: 0}
-    - target: {fileID: 8409261061506490558, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -16.577755
-      objectReference: {fileID: 0}
-    - target: {fileID: 8409261061506490558, guid: 420b280165a832b4b9774cb25357645b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -17.017656
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -954,7 +910,9 @@ PrefabInstance:
       value: Bedroom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2182152225854946475, guid: 206e91ae7880774468a4bc7127a88fb7, type: 3}
+    - {fileID: 627561879750625096, guid: 206e91ae7880774468a4bc7127a88fb7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 206e91ae7880774468a4bc7127a88fb7, type: 3}
