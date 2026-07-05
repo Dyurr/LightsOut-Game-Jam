@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 4689024501548653716}
   - component: {fileID: 7252484820326069812}
   - component: {fileID: 8963309882011747463}
+  - component: {fileID: 5820006117919056546}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -427,3 +428,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5820006117919056546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370922736951444755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa97b99b304f1a46aeefd900cbb484f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightController
+  flashlight: {fileID: 0}
+  maxBatteryLife: 100
+  batteryDrainRate: 5
+  batteryRechargeRate: 2
+  rechargeDelay: 3
+  lowBatteryThreshold: 20
+  baseIntensity: 150
+  flickerIntensity: 5
+  flickerSpeed: 8

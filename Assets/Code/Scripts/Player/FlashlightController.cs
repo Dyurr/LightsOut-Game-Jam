@@ -17,9 +17,18 @@ public class FlashlightController : MonoBehaviour
     
     [Header("Low Battery Feedback")]
     [SerializeField] private float lowBatteryThreshold = 20f; // Battery level at which feedback starts
-    [SerializeField] private float baseIntensity = 1f; // Base intensity of the flashlight
-    [SerializeField] private float flickerIntensity = 0.5f; // Int
+    [SerializeField] private float baseIntensity = 150f; // Base intensity of the flashlight
+    [SerializeField] private float flickerIntensity = 0.5f; // Int 
     [SerializeField] private float flickerSpeed = 0.1f; // Speed of flickering
+
+    [Header("Flashlight Wobble")]
+    [SerializeField] private Transform flashlightPivot;
+    [SerializeField] private float wobbleAmount = 2.5f;
+    [SerializeField] private float wobbleSmoothness = 8f;
+    [SerializeField] private float returnSmoothness = 6f;
+
+    private Vector3 lastRotation;
+    private Vector3 currentWobble;
 
     public float CurrentBattery {get; private set;} // Current battery level
 
@@ -37,6 +46,7 @@ public class FlashlightController : MonoBehaviour
         CurrentBattery = maxBatteryLife;
         flashlight.intensity = baseIntensity;
         SetFlashlight(false);
+        lastRotation = transform.eulerAngles;
     }
 
 
@@ -61,7 +71,43 @@ public class FlashlightController : MonoBehaviour
             RechargeBattery();
         }
     }
+        HandleWobble();
     }
+
+    private void HandleWobble()
+{
+    if (flashlightPivot == null) return;
+
+    Vector3 currentRotation = transform.eulerAngles;
+
+    float yawDelta = Mathf.DeltaAngle(lastRotation.y, currentRotation.y);
+    float pitchDelta = Mathf.DeltaAngle(lastRotation.x, currentRotation.x);
+
+    Vector3 targetWobble = new Vector3(
+        -pitchDelta * wobbleAmount,
+        yawDelta * wobbleAmount,
+        0f
+    );
+
+    targetWobble.x = Mathf.Clamp(targetWobble.x, -wobbleAmount, wobbleAmount);
+    targetWobble.y = Mathf.Clamp(targetWobble.y, -wobbleAmount, wobbleAmount);
+
+    currentWobble = Vector3.Lerp(
+        currentWobble,
+        targetWobble,
+        Time.deltaTime * wobbleSmoothness
+    );
+
+    currentWobble = Vector3.Lerp(
+        currentWobble,
+        Vector3.zero,
+        Time.deltaTime * returnSmoothness
+    );
+
+    flashlightPivot.localRotation = Quaternion.Euler(currentWobble);
+
+    lastRotation = currentRotation;
+}
 
 
     private void ToggleFlashlight()
@@ -102,17 +148,24 @@ public class FlashlightController : MonoBehaviour
 
 
     private void HandleFlicker()
+{
+    if (CurrentBattery > lowBatteryThreshold)
     {
-        if (CurrentBattery > lowBatteryThreshold)
-        {
-            flashlight.intensity = baseIntensity;
-            return;
-        }
-
-        float severity = 1f - (CurrentBattery / lowBatteryThreshold); // Calculate severity based on battery level
-        float noise = Mathf.PerlinNoise(Time.time * flickerSpeed, 0f);
-        float flickerRange = Mathf.Lerp(baseIntensity, flickerIntensity, severity); 
-        
-        flashlight.intensity = Mathf.Lerp(flickerRange, baseIntensity, noise);
+        flashlight.intensity = baseIntensity;
+        return;
     }
+
+    float severity = 1f - (CurrentBattery / lowBatteryThreshold);
+
+    // Random flicker between low and high
+    float randomFlicker = Random.Range(0f, 1f);
+
+    // Makes dark dips more common
+    randomFlicker = Mathf.Pow(randomFlicker, 2.5f);
+
+    float minIntensity = Mathf.Lerp(baseIntensity, flickerIntensity, severity);
+    float maxIntensity = baseIntensity;
+
+    flashlight.intensity = Mathf.Lerp(minIntensity, maxIntensity, randomFlicker);
+}
 }
