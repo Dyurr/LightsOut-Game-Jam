@@ -127,3 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 50
   itemName: Default Item
+  holdDuration: 2

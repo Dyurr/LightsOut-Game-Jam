@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/MainMenu.unity
     guid: 80efbbdbe631e444eb7fbd727728e13b
   - enabled: 1
-    path: Assets/Level/Scenes/BlankRoom.unity
-    guid: ed5969fdf3b10484792feb54ffb704ba
+    path: Assets/Level/Scenes/MainLevel.unity
+    guid: b39789b7b34a777419147d7e0596b902
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -3,7 +3,7 @@ using UnityEngine;
 public class MainMenuController : MonoBehaviour
 {
     // Change it to main scene when finished
-    [SerializeField] private string gameSceneName = "BlankRoom";
+    [SerializeField] private string gameSceneName = "MainLevel";
 
 
     public void StartGame()

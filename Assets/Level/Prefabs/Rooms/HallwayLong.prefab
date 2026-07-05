@@ -187,6 +187,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1078587512688633558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4494675743207719110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4608101306207667478}
+  m_Layer: 0
+  m_Name: SpawnLoc (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4608101306207667478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494675743207719110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1889527794418922806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5321560430604307864
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5738153154052767932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,7 +482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1889527794418922806}
   m_Layer: 0
-  m_Name: SpawnLoc
+  m_Name: SpawnLocs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +500,8 @@ Transform:
   m_LocalPosition: {x: 2, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4608101306207667478}
   m_Father: {fileID: 1940466113234368506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7436637049728937872
@@ -617,6 +649,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -678,6 +714,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -865,6 +905,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -926,6 +970,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1051,6 +1099,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1175,6 +1227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1236,6 +1292,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1423,6 +1483,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1546,6 +1610,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1733,6 +1801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1918,6 +1990,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2105,6 +2181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2166,6 +2246,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2291,6 +2375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2353,6 +2441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2414,6 +2506,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2725,6 +2821,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2786,6 +2886,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3295,6 +3399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3481,6 +3589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3542,6 +3654,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3791,6 +3907,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3853,6 +3973,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3914,6 +4038,10 @@ PrefabInstance:
     - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
       propertyPath: m_Name
       value: Retro_Bedroom_floor_tile_01 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295668453997970621, guid: 3bb0e4c9dbebf57439eb2e4e8d96321f, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

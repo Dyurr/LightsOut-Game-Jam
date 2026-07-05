@@ -127,7 +127,15 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetKeyUp(crouchKey))
         {
+            if (Physics.Raycast(transform.position, Vector3.up, 1f))
+            {
+                return; // ceiling? stay crouched
+            }
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            
+            Vector3 v = rb.linearVelocity;
+            if (v.y > 0f) v.y = 0f;
+             rb.linearVelocity = v;
         }
     }
 
