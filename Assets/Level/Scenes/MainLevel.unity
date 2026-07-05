@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b8e8f3bcdbcb4fb1dfaf499652c44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  playerPrefab: {fileID: 8370922736951444755, guid: 20009233755027144967239575fc3bb7, type: 3}
+  playerPrefab: {fileID: 3861743042561514087, guid: bf7bc891ac8059242b1af243effb12dd, type: 3}
   starterRoomPrefab: {fileID: 6200538595792967397, guid: 50f586ad2e0b48e4e9165682ab4f3361, type: 3}
   roomPrefabs:
   - {fileID: 5322990959754065348, guid: d4a4cbe25c319bd43bd6d0872fc8be2a, type: 3}
