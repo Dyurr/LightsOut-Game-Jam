@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3344679282370263116}
   - component: {fileID: 3291601617487632889}
   - component: {fileID: 2168618942188981736}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoldBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 170
-  itemName: Default Item
+  itemName: Gold Bar
   holdDuration: 1.8
 --- !u!135 &2168618942188981736
 SphereCollider:

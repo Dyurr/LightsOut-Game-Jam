@@ -21,6 +21,11 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private float flickerIntensity = 0.5f; // Int
     [SerializeField] private float flickerSpeed = 0.1f; // Speed of flickering
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource; // Sound for toggling flashlight
+    [SerializeField] private AudioClip toggleOnClip; // Sound for turning on
+    [SerializeField] private AudioClip toggleOffClip; // Sound for turning off
     public float CurrentBattery {get; private set;} // Current battery level
 
     public bool IsFlashlightOn {get; private set;} // Flashlight state
@@ -67,8 +72,15 @@ public class FlashlightController : MonoBehaviour
     private void ToggleFlashlight()
     {
         if (!IsFlashlightOn && CurrentBattery <= 0f) return; // block turning on with no battery
-            SetFlashlight(!IsFlashlightOn);
-            NoiseSystem.MakeNoise(transform.position, 3f); // Make noise when toggling flashlight
+
+        SetFlashlight(!IsFlashlightOn);
+        NoiseSystem.MakeNoise(transform.position, 3f); // Make noise when toggling flashlight
+
+        AudioClip clipToPlay = IsFlashlightOn ? toggleOnClip : toggleOffClip;
+        if (clipToPlay != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
+        }
     }
 
     private void SetFlashlight(bool state)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 666575590033016477}
   - component: {fileID: 5345977236568558429}
   - component: {fileID: 3627798834037511590}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DiamondRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 30
-  itemName: Default Item
+  itemName: Diamond Ring
   holdDuration: 0.2
 --- !u!135 &3627798834037511590
 SphereCollider:

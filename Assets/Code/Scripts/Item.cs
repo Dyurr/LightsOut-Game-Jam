@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
     protected bool isHolding = false;
     protected Slider progressBar;
 
-    public virtual string InteractionPrompt => $"Press E to pick up {itemName}";
+    public virtual string InteractionPrompt => $"Hold E to pick up {itemName}";
 
     public void SetProgressBar(Slider slider)
     {

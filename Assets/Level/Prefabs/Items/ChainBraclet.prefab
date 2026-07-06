@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8276308632693942412}
   - component: {fileID: 3775245748781769230}
   - component: {fileID: 422251372588035785}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ChainBraclet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 35
-  itemName: Default Item
+  itemName: ChainBraclet
   holdDuration: 0.6
 --- !u!135 &422251372588035785
 SphereCollider:
