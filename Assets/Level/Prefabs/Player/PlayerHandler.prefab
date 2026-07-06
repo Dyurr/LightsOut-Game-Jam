@@ -1844,6 +1844,10 @@ PrefabInstance:
       propertyPath: whatIsFloor.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 8963309882011747463, guid: 20009233755027144967239575fc3bb7, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1888,6 +1892,14 @@ MonoBehaviour:
   baseIntensity: 1
   flickerIntensity: 0.5
   flickerSpeed: 0.1
+  audioSource: {fileID: 5421077123552802318}
+  toggleOnClip: {fileID: 8300000, guid: 6dc93e24d0e14604f81714964a096065, type: 3}
+  toggleOffClip: {fileID: 8300000, guid: b117fcda27f50bb439e75da79c3bc46d, type: 3}
+--- !u!82 &5421077123552802318 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8963309882011747463, guid: 20009233755027144967239575fc3bb7, type: 3}
+  m_PrefabInstance: {fileID: 3990077338176156297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9094519422115351958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5289938492720217887, guid: 20009233755027144967239575fc3bb7, type: 3}
