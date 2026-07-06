@@ -19,6 +19,11 @@ public class EnemyAI : MonoBehaviour
     public Collider killCollider;
     public List<Transform> waypoints = new List<Transform>();
 
+    [Header("Vision")]
+    public Transform eyePosition; // assign to the vision cone's origin, or enemy head
+    public LayerMask obstacleLayers; // set this to whatever layers count as "blocks sight" (walls, doors, etc.)
+    public float eyeHeightOffsetToPlayer = 1f; // aim roughly at player's chest/head, not their feet
+
     [Header("Noise Response")]
     public float investigateWaitTime = 3f;
     public float investigateMoveSpeedMultiplier = 1.2f;
@@ -216,19 +221,39 @@ public class EnemyAI : MonoBehaviour
     }
 
     void OnTriggerStay(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        if (currentState == State.Attacking) return;
+{
+    if (!other.CompareTag("Player")) return;
+    if (currentState == State.Attacking) return;
 
-        if (detectionCollider != null && detectionCollider.bounds.Intersects(other.bounds))
+    if (detectionCollider != null && detectionCollider.bounds.Intersects(other.bounds))
+    {
+        if (HasLineOfSight(other))
         {
             currentState = State.Chasing;
         }
+    }
 
-        if (killCollider != null && killCollider.bounds.Intersects(other.bounds))
+    if (killCollider != null && killCollider.bounds.Intersects(other.bounds))
+    {
+        TryKill();
+    }
+}
+
+    private bool HasLineOfSight(Collider playerCollider)
+    {
+        Vector3 origin = eyePosition != null ? eyePosition.position : transform.position;
+        Vector3 targetPoint = playerCollider.bounds.center + Vector3.up * eyeHeightOffsetToPlayer;
+
+        Vector3 direction = targetPoint - origin;
+        float distance = direction.magnitude;
+
+        // If something on the obstacle layers is hit before reaching the player, sight is blocked.
+        if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, distance, obstacleLayers))
         {
-            TryKill();
+            return false;
         }
+
+        return true;
     }
 
     void OnTriggerExit(Collider other)
