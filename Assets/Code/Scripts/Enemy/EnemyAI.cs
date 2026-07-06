@@ -5,19 +5,17 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
-    private enum State { Patrolling, Investigating, Chasing, Attacking }
+    private enum State { Roaming, Investigating, Chasing, Attacking }
 
     private NavMeshAgent agent;
     private Transform playerTransform;
-    private State currentState = State.Patrolling;
-    private int currentWaypointIndex = 0;
+    private State currentState = State.Roaming;
     private Coroutine mainRoutine;
 
     public float moveSpeed = 10f;
     public float chaseMultiplier = 1.5f;
     public Collider detectionCollider;
     public Collider killCollider;
-    public List<Transform> waypoints = new List<Transform>();
 
     [Header("Vision")]
     public Transform eyePosition; // assign to the vision cone's origin, or enemy head
@@ -28,10 +26,16 @@ public class EnemyAI : MonoBehaviour
     public float investigateWaitTime = 3f;
     public float investigateMoveSpeedMultiplier = 1.2f;
 
+    [Header("Roaming")]
+    public float roamRadius = 15f;       // how far from current position to search for a new roam point
+    public float roamMinWaitTime = 1f;   // pause after arriving before picking a new point
+    public float roamMaxWaitTime = 3f;
+    public int roamSampleAttempts = 10;  // how many tries to find a valid point before giving up this cycle
+
     private Vector3 investigateTarget;
     private Animator anim;
 
-    public bool IsPatrolling => currentState == State.Patrolling;
+    public bool IsRoaming => currentState == State.Roaming;
     public bool IsInvestigating => currentState == State.Investigating;
     public bool IsChasing => currentState == State.Chasing;
     public bool IsAttacking => currentState == State.Attacking;
@@ -128,8 +132,8 @@ public class EnemyAI : MonoBehaviour
         {
             switch (currentState)
             {
-                case State.Patrolling:
-                    yield return PatrolStep();
+                case State.Roaming:
+                    yield return RoamStep();
                     break;
 
                 case State.Investigating:
@@ -147,33 +151,59 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private IEnumerator PatrolStep()
+    private IEnumerator RoamStep()
     {
-        if (waypoints == null || waypoints.Count == 0)
+        Vector3? roamTarget = FindRandomRoamPoint();
+
+        if (roamTarget == null)
         {
-            yield return null;
+        // Couldn't find a valid point this cycle — wait a moment and try again next loop.
+            yield return new WaitForSeconds(0.5f);
             yield break;
         }
 
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        if (targetWaypoint == null)
-        {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
-            yield break;
-        }
+        agent.SetDestination(roamTarget.Value);
 
-        agent.SetDestination(targetWaypoint.position);
-
-        while (currentState == State.Patrolling &&
-               Vector3.Distance(transform.position, targetWaypoint.position) > agent.stoppingDistance)
+        // Travel toward the roam point, bail out immediately if state changes (noise, spotted, etc.)
+        while (currentState == State.Roaming &&
+               !agent.pathPending &&
+               agent.remainingDistance > agent.stoppingDistance)
         {
             yield return null;
         }
 
-        if (currentState == State.Patrolling)
+        if (currentState != State.Roaming) yield break;
+
+        // Arrived — pause briefly like it's looking around, then loop back for a new point
+        float waitTime = Random.Range(roamMinWaitTime, roamMaxWaitTime);
+        float timer = 0f;
+        while (currentState == State.Roaming && timer < waitTime)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+            timer += Time.deltaTime;
+            yield return null;
         }
+    }
+
+    private Vector3? FindRandomRoamPoint()
+    {
+        for (int i = 0; i < roamSampleAttempts; i++)
+        {
+            // Random direction and distance within roamRadius, relative to current position
+            Vector2 randomCircle = Random.insideUnitCircle * roamRadius;
+            Vector3 randomPoint = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, roamRadius, NavMesh.AllAreas))
+            {
+                // Optional: confirm there's an actual walkable path there, not just a nearby navmesh point
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    return hit.position;
+                }
+            }
+        }
+
+        return null; // no valid point found this cycle
     }
 
     private IEnumerator InvestigateStep()
@@ -197,7 +227,7 @@ public class EnemyAI : MonoBehaviour
 
         if (currentState == State.Investigating)
         {
-            currentState = State.Patrolling;
+            currentState = State.Roaming;
         }
     }
 
@@ -210,7 +240,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    public void OnDetectionTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
 
@@ -220,12 +250,12 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    public void OnDetectionTriggerStay(Collider other)
 {
     if (!other.CompareTag("Player")) return;
     if (currentState == State.Attacking) return;
 
-    if (detectionCollider != null && detectionCollider.bounds.Intersects(other.bounds))
+    if (detectionCollider != null)
     {
         if (HasLineOfSight(other))
         {
@@ -256,12 +286,12 @@ public class EnemyAI : MonoBehaviour
         return true;
     }
 
-    void OnTriggerExit(Collider other)
+    public void OnDetectionTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         if (currentState == State.Chasing)
         {
-            currentState = State.Patrolling;
+            currentState = State.Roaming;
         }
     }
 
@@ -281,6 +311,6 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator ResetAfterAttack()
     {
         yield return new WaitForSeconds(1f);
-        currentState = State.Patrolling;
+        currentState = State.Roaming;
     }
 }

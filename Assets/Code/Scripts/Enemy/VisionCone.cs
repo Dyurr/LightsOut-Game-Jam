@@ -8,12 +8,14 @@ public class VisionCone : MonoBehaviour
 {
     [Header("Cone Shape")]
     public float viewAngle = 90f;
+    public float verticalViewAngle = 60f;
     public float viewRange = 10f;
-    public float coneHeight = 1.5f; // vertical thickness so it has volume for the collider
     [Range(4, 40)] public int segments = 20;
+    [Range(2, 20)] public int vSegments = 20;
 
     [Header("Appearance")]
-    public Color coneColor = new Color(1f, 0f, 0f, 0.3f);
+    public Color coneColor = new Color(1f, 0.1f, 0.1f, 1f);
+    public float glowIntensity = 2.5f; // push this higher for a stronger "hot" look, especially with Bloom enabled
 
     void Awake()
     {
@@ -35,60 +37,73 @@ public class VisionCone : MonoBehaviour
     {
         Mesh mesh = new Mesh { name = "VisionCone" };
 
-        float halfAngle = viewAngle * 0.5f;
-        float angleStep = viewAngle / segments;
+        float halfH = viewAngle * 0.5f;
+        float halfV = verticalViewAngle * 0.5f;
+        float hStep = viewAngle / segments;
+        float vStep = verticalViewAngle / vSegments;
 
         List<Vector3> verts = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Color> colors = new List<Color>();
 
-        Vector3 apexBottom = Vector3.zero;
-        Vector3 apexTop = new Vector3(0, coneHeight, 0);
-        verts.Add(apexBottom); // 0
-        verts.Add(apexTop);    // 1
+        // single apex point at the origin
+        int apexIndex = verts.Count;
+        verts.Add(Vector3.zero);
+        colors.Add(Color.white);
 
-        int bottomStart = verts.Count;
-        int topStart = bottomStart + (segments + 1);
+        // grid of surface points — each one is 'viewRange' away from the apex,
+        // fanned out by yaw (left/right) and pitch (up/down) simultaneously
+        int gridStart = verts.Count;
+        for (int h = 0; h <= segments; h++)
+        {
+            float yaw = (-halfH + hStep * h) * Mathf.Deg2Rad;
+            for (int v = 0; v <= vSegments; v++)
+            {
+                float pitch = (-halfV + vStep * v) * Mathf.Deg2Rad;
+                Vector3 dir = new Vector3(
+                    Mathf.Sin(yaw) * Mathf.Cos(pitch),
+                    Mathf.Sin(pitch),
+                    Mathf.Cos(yaw) * Mathf.Cos(pitch)
+                );
+                verts.Add(dir * viewRange);
+                colors.Add(new Color(1, 1, 1, 0f)); // fades out toward the surface
+            }
+        }
 
-        for (int i = 0; i <= segments; i++)
+        int Idx(int h, int v) => gridStart + h * (vSegments + 1) + v;
+
+        // curved outer surface (the "cap" of the cone)
+        for (int h = 0; h < segments; h++)
         {
-            float rad = (-halfAngle + angleStep * i) * Mathf.Deg2Rad;
-            Vector3 dir = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad)) * viewRange;
-            verts.Add(dir);                          // bottom ring
-        }
-        for (int i = 0; i <= segments; i++)
-        {
-            float rad = (-halfAngle + angleStep * i) * Mathf.Deg2Rad;
-            Vector3 dir = new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad)) * viewRange;
-            verts.Add(dir + Vector3.up * coneHeight); // top ring
+            for (int v = 0; v < vSegments; v++)
+            {
+                int a = Idx(h, v), b = Idx(h + 1, v), c = Idx(h, v + 1), d = Idx(h + 1, v + 1);
+                tris.Add(a); tris.Add(c); tris.Add(b);
+                tris.Add(b); tris.Add(c); tris.Add(d);
+            }
         }
 
-        // bottom fan
-        for (int i = 0; i < segments; i++)
+        // fan the apex to all four border edges of the grid to close the volume
+        for (int v = 0; v < vSegments; v++) // left edge
         {
-            tris.Add(0); tris.Add(bottomStart + i); tris.Add(bottomStart + i + 1);
+            tris.Add(apexIndex); tris.Add(Idx(0, v + 1)); tris.Add(Idx(0, v));
         }
-        // top fan
-        for (int i = 0; i < segments; i++)
+        for (int v = 0; v < vSegments; v++) // right edge
         {
-            tris.Add(1); tris.Add(topStart + i + 1); tris.Add(topStart + i);
+            tris.Add(apexIndex); tris.Add(Idx(segments, v)); tris.Add(Idx(segments, v + 1));
         }
-        // outer curved wall
-        for (int i = 0; i < segments; i++)
+        for (int h = 0; h < segments; h++) // bottom edge
         {
-            int b0 = bottomStart + i, b1 = bottomStart + i + 1;
-            int t0 = topStart + i, t1 = topStart + i + 1;
-            tris.Add(b0); tris.Add(t0); tris.Add(b1);
-            tris.Add(b1); tris.Add(t0); tris.Add(t1);
+            tris.Add(apexIndex); tris.Add(Idx(h, 0)); tris.Add(Idx(h + 1, 0));
         }
-        // two flat side walls (closing the pie slice)
-        int bL = bottomStart, tL = topStart, bR = bottomStart + segments, tR = topStart + segments;
-        tris.Add(0); tris.Add(tL); tris.Add(bL);
-        tris.Add(tL); tris.Add(1); tris.Add(bL);
-        tris.Add(0); tris.Add(bR); tris.Add(tR);
-        tris.Add(bR); tris.Add(1); tris.Add(tR);
+        for (int h = 0; h < segments; h++) // top edge
+        {
+            tris.Add(apexIndex); tris.Add(Idx(h + 1, vSegments)); tris.Add(Idx(h, vSegments));
+        }
 
         mesh.vertices = verts.ToArray();
         mesh.triangles = tris.ToArray();
+        mesh.colors = colors.ToArray();
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         return mesh;
@@ -96,15 +111,28 @@ public class VisionCone : MonoBehaviour
 
     private Material BuildConeMaterial()
     {
-        Shader shader = Shader.Find("Universal Render Pipeline/Unlit")
-                        ?? Shader.Find("Unlit/Color")
-                        ?? Shader.Find("Standard");
-        Material mat = new Material(shader) { color = coneColor };
-        mat.SetOverrideTag("RenderType", "Transparent");
+        Shader shader = Shader.Find("Universal Render Pipeline/Particles/Unlit")
+                        ?? Shader.Find("Particles/Additive")
+                        ?? Shader.Find("Universal Render Pipeline/Unlit")
+                        ?? Shader.Find("Unlit/Color");
+
+        Material mat = new Material(shader);
+
+        // Boost the color well above 1.0 so it reads as "glowing" rather than flat red.
+        Color glow = coneColor * glowIntensity;
+        mat.color = glow;
+
+        if (mat.HasProperty("_BaseColor")) mat.SetColor("_BaseColor", glow);
+
+        // Additive blending: SrcAlpha One means it adds light instead of covering what's behind it.
+        if (mat.HasProperty("_BlendOp")) mat.SetFloat("_BlendOp", (float)UnityEngine.Rendering.BlendOp.Add);
+        if (mat.HasProperty("_SrcBlend")) mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        if (mat.HasProperty("_DstBlend")) mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.One);
+        mat.SetInt("_ZWrite", 0); // don't write depth, so it never occludes things behind it
+        mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
         mat.renderQueue = 3000;
-        if (mat.HasProperty("_Mode")) mat.SetFloat("_Mode", 3); // Standard shader: Transparent mode
-        if (mat.HasProperty("_Surface")) mat.SetFloat("_Surface", 1); // URP: Transparent surface
-        mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off); // visible from both sides
+        mat.EnableKeyword("_ALPHABLEND_ON");
+
         return mat;
     }
 }
