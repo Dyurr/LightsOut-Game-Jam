@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1681648519906110088}
   - component: {fileID: 7044093696834214616}
   - component: {fileID: -6948636293132425500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Necklace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 20
-  itemName: Default Item
+  itemName: Necklace
   holdDuration: 0.2
 --- !u!135 &-6948636293132425500
 SphereCollider:

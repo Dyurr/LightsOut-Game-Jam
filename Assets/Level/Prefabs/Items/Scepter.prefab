@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1641952486749168412}
   - component: {fileID: 7080487495344372194}
   - component: {fileID: 4447834725139210315}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Scepter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 220
-  itemName: Default Item
+  itemName: Scepter
   holdDuration: 2
 --- !u!135 &4447834725139210315
 SphereCollider:
