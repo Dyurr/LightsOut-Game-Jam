@@ -255,10 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a952d6e2b9977a44a02eeede76e2493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  sprintSpeed: 10
-  walkSpeed: 7
+  sprintSpeed: 7
+  walkSpeed: 5
   groundDrag: 5
-  crouchSpeed: 3.5
+  crouchSpeed: 2.5
   crouchYScale: 0.5
   sprintKey: 304
   crouchKey: 306

@@ -25,6 +25,10 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int maxTotalRooms = 20; // hard cap so branching can't spiral out of control
 
 
+    private bool exitRoomSpawned = false;
+    private List<Transform> exitBranchDeadEnds = new List<Transform>();
+
+
 
     // Hard cap on rooms
     private int globalRoomCap = 40;     
@@ -86,6 +90,9 @@ private void Start()
         GenerateBranch(exit, depth, isExitBranch, null, isStarterExit: true, branchRoomsSpawned: 0, branchRoomBudget: budgetPerBranch);
     }
 
+    if (!exitRoomSpawned)
+        ForceSpawnExitRoom();
+
     if (navMeshSurface != null)
         navMeshSurface.BuildNavMesh();
 }
@@ -93,11 +100,10 @@ private void Start()
 private void GenerateBranch(Transform incomingExit, int remainingDepth, bool isExitBranch, GameObject lastPrefabUsed,
     bool isStarterExit, int branchRoomsSpawned, int branchRoomBudget)
 {
-    // Two independent caps: this branch's own slice, and an overall safety ceiling
     if (branchRoomsSpawned >= branchRoomBudget || totalRoomsSpawned >= globalRoomCap)
     {
-        if (wallCapPrefab != null)
-            Instantiate(wallCapPrefab, incomingExit.position, incomingExit.rotation);
+        if (isExitBranch) exitBranchDeadEnds.Add(incomingExit);
+        else if (wallCapPrefab != null) Instantiate(wallCapPrefab, incomingExit.position, incomingExit.rotation);
         return;
     }
 
@@ -105,8 +111,10 @@ private void GenerateBranch(Transform incomingExit, int remainingDepth, bool isE
 
     if (isFinalRoom && isExitBranch)
     {
-        TryPlaceRoom(endRoomPrefab, incomingExit, remainingDepth, isExitBranch, lastPrefabUsed, allowRetry: false,
+        bool placed = TryPlaceRoom(endRoomPrefab, incomingExit, remainingDepth, isExitBranch, lastPrefabUsed, allowRetry: false,
             isStarterExit, branchRoomsSpawned, branchRoomBudget);
+        if (placed) exitRoomSpawned = true;
+        else exitBranchDeadEnds.Add(incomingExit); // couldn't place even with allowRetry:false — save slot for forced retry
         return;
     }
 
@@ -132,8 +140,9 @@ private void GenerateBranch(Transform incomingExit, int remainingDepth, bool isE
         triedPrefabs.Add(candidate);
     }
 
-    if (wallCapPrefab != null)
-        Instantiate(wallCapPrefab, incomingExit.position, incomingExit.rotation);
+    // Ran out of attempts placing a connector room on the exit branch — this exit is now unreachable this way
+    if (isExitBranch) exitBranchDeadEnds.Add(incomingExit);
+    else if (wallCapPrefab != null) Instantiate(wallCapPrefab, incomingExit.position, incomingExit.rotation);
 }
 
 // Returns true if the room was placed successfully (no overlap), false if it was destroyed due to overlap
@@ -183,8 +192,9 @@ private bool TryPlaceRoom(GameObject prefabToUse, Transform incomingExit, int re
 
     bool isFinalRoom = remainingDepth <= 0;
     if (isFinalRoom && isExitBranch)
+    {    exitRoomSpawned = true;
         return true;
-
+    }
     Transform spawnLocs = newRoom.transform.Find("SpawnLocs");
     if (spawnLocs == null || spawnLocs.childCount == 0)
         return true;
@@ -262,4 +272,30 @@ private GameObject PickRandomPrefab(GameObject excludePrefab, List<GameObject> a
     shrunk.Expand(-margin * 2f);
     return shrunk;
 }
+
+
+    private void ForceSpawnExitRoom()
+{
+    if (endRoomPrefab == null || exitBranchDeadEnds.Count == 0)
+    {
+        Debug.LogError("Could not force-spawn exit room — no valid slots recorded!");
+        return;
+    }
+
+    foreach (Transform slot in exitBranchDeadEnds)
+    {
+        if (slot == null) continue; // slot's GameObject may have been destroyed (e.g. wall cap swapped in)
+
+        bool placed = TryPlaceRoom(endRoomPrefab, slot, 0, true, null, allowRetry: false,
+            isStarterExit: false, branchRoomsSpawned: 0, branchRoomBudget: int.MaxValue);
+        if (placed)
+        {
+            exitRoomSpawned = true;
+            return;
+        }
+    }
+
+    Debug.LogError("Exhausted all fallback slots — exit room still not placed!");
+}
+
 }

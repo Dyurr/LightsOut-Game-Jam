@@ -1886,7 +1886,7 @@ MonoBehaviour:
   flashlight: {fileID: 2639804083272421181}
   maxBatteryLife: 100
   batteryDrainRate: 5
-  batteryRechargeRate: 2
+  batteryRechargeRate: 10
   rechargeDelay: 3
   lowBatteryThreshold: 20
   baseIntensity: 1
