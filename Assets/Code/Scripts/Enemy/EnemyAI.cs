@@ -303,6 +303,7 @@ public class EnemyAI : MonoBehaviour
 
         currentState = State.Attacking;
         if (anim != null) anim.SetTrigger("Attack");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverScene");
             Debug.Log("Player has been killed by the enemy!");
 
         StartCoroutine(ResetAfterAttack());

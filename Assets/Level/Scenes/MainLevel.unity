@@ -277,6 +277,8 @@ MonoBehaviour:
   minExitDepth: 1
   maxExitDepth: 5
   maxTotalRooms: 30
+  enemyPrefab: {fileID: 4557002286298098396, guid: 420b280165a832b4b9774cb25357645b, type: 3}
+  enemySpawnDelay: 10
   itemPrefabs:
   - {fileID: 6875060824737412629, guid: 1a873eba975a18540b6c5d904ef8a409, type: 3}
   - {fileID: 8052569337313428246, guid: 75577cb9dbe56de4bbf6c151db1abc9e, type: 3}
