@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4953898789324588774}
   - component: {fileID: 8075583766769923936}
   - component: {fileID: -4205573919685466355}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DiamondNecklace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   cashValue: 70
-  itemName: Default Item
+  itemName: Diamond Necklace
   holdDuration: 0.6
 --- !u!135 &-4205573919685466355
 SphereCollider:

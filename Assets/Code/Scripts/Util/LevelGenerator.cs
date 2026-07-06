@@ -216,20 +216,25 @@ private GameObject PickRandomPrefab(GameObject excludePrefab, List<GameObject> a
 }
 
     private void SpawnValuables(GameObject room)
-    {
-        if (itemPrefabs == null || itemPrefabs.Count == 0) return;
-        Transform valuables = room.transform.Find("Valuables");
-        if (valuables == null) return;
+{
+    if (itemPrefabs == null || itemPrefabs.Count == 0) return;
+    Transform valuables = room.transform.Find("Valuables");
+    if (valuables == null) return;
 
-        foreach (Transform point in valuables)
+    // Snapshot the points first — don't iterate the live hierarchy
+    List<Transform> points = new List<Transform>();
+    foreach (Transform point in valuables)
+        points.Add(point);
+
+    foreach (Transform point in points)
+    {
+        if (Random.value <= spawnChance)
         {
-            if (Random.value <= spawnChance)
-            {
-                GameObject chosenItem = itemPrefabs[Random.Range(0, itemPrefabs.Count)];
-                Instantiate(chosenItem, point.position, point.rotation, valuables);
-            }
+            GameObject chosenItem = itemPrefabs[Random.Range(0, itemPrefabs.Count)];
+            Instantiate(chosenItem, point.position, point.rotation, valuables);
         }
     }
+}
 
     private void AlignRoomToPoint(GameObject newRoom, Transform entryPoint, Transform targetExit)
     {
