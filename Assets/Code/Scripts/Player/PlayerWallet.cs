@@ -13,6 +13,7 @@ public class PlayerWallet : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void AddCash(int amount)
@@ -21,6 +22,13 @@ public class PlayerWallet : MonoBehaviour
         onCashAdded?.Invoke(amount);
         onCashChanged?.Invoke(totalCash);
         Debug.Log($"Cash added: {amount}, Total: {totalCash}");
+    }
+
+    public void ResetWallet()
+    {
+        totalCash = 0;
+        onCashChanged?.Invoke(totalCash);
+        Debug.Log("Wallet reset");
     }
 }
 
