@@ -17,10 +17,7 @@ public class GameCompleteController : MonoBehaviour
 
     public void OnReturnToMenuPressed()
     {
-        if (PlayerWallet.Instance != null)
-        {
-            PlayerWallet.Instance.ResetWallet();
-        }
+        PlayerWallet.ResetWallet();
         SceneManager.LoadScene(mainMenuSceneName);
     }
 }

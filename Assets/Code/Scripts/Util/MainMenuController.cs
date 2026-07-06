@@ -6,13 +6,11 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string gameSceneName = "MainLevel";
 
 
-    public void StartGame()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(gameSceneName);
-        PlayerWallet playerWallet = FindObjectOfType<PlayerWallet>(); // or however you access it once player exists
-        playerWallet?.ResetWallet();
-        
-    }
+  public void StartGame()
+{
+    PlayerWallet.ResetWallet();
+    UnityEngine.SceneManagement.SceneManager.LoadScene(gameSceneName);
+}
 
     public void QuitGame()
     {

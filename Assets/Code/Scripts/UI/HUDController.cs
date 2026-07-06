@@ -19,14 +19,14 @@ public class HUDController : MonoBehaviour
 
    private void OnEnable()
    {
-       PlayerWallet.Instance.onCashAdded += UpdateCashAddedText;
-       PlayerWallet.Instance.onCashChanged += UpdateTotalCashText;
+       PlayerWallet.onCashAdded += UpdateCashAddedText;
+       PlayerWallet.onCashChanged += UpdateTotalCashText;
    }
 
     private void OnDisable()
     {
-         PlayerWallet.Instance.onCashAdded -= UpdateCashAddedText;
-         PlayerWallet.Instance.onCashChanged -= UpdateTotalCashText;
+         PlayerWallet.onCashAdded -= UpdateCashAddedText;
+         PlayerWallet.onCashChanged -= UpdateTotalCashText;
     }
 
 
@@ -52,7 +52,7 @@ public class HUDController : MonoBehaviour
     {
         cashAddedText.gameObject.SetActive(false); 
         interactProgressBar.gameObject.SetActive(false);
-        UpdateTotalCashText(PlayerWallet.Instance.totalCash);
+        UpdateTotalCashText(PlayerWallet.totalCash);
     }
 
 

@@ -29,10 +29,9 @@ public class GameOverController : MonoBehaviour
 
     public void OnReturnToMenuPressed()
     {
-        if (PlayerWallet.Instance != null)
-        {
-            PlayerWallet.Instance.ResetWallet();
-        }
+   
+        PlayerWallet.ResetWallet();
+  
         UnityEngine.SceneManagement.SceneManager.LoadScene(mainMenuSceneName);
     }
 
