@@ -274,7 +274,7 @@ MonoBehaviour:
   wallCapPrefab: {fileID: 6171150641940509250, guid: f64e1e5c03d912b4c8816d388ff9ea8c, type: 3}
   minDeadEndDepth: 3
   maxDeadEndDepth: 5
-  minExitDepth: 1
+  minExitDepth: 3
   maxExitDepth: 5
   maxTotalRooms: 30
   enemyPrefab: {fileID: 4557002286298098396, guid: 420b280165a832b4b9774cb25357645b, type: 3}

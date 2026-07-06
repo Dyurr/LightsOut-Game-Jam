@@ -43,19 +43,6 @@ public class LevelGenerator : MonoBehaviour
     private List<Bounds> placedRoomBounds = new List<Bounds>();
 
     [SerializeField] private NavMeshSurface navMeshSurface;
-    
-    private void Awake()
-    {
-        if (navMeshSurface == null)
-        {
-            navMeshSurface = GetComponent<NavMeshSurface>();
-        }
-
-        if (navMeshSurface == null)
-        {
-            navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
-        }
-    }
 
     private void Start()
     {
@@ -109,14 +96,8 @@ public class LevelGenerator : MonoBehaviour
 
         if (navMeshSurface != null)
         {
-            navMeshSurface.RemoveData();
             navMeshSurface.BuildNavMesh();
-            Debug.Log("Runtime NavMesh built and assigned to NavMeshSurface.");
         }
-        else
-        {
-            Debug.LogError("No NavMeshSurface available.");
-        }    
         
         StartCoroutine(SpawnEnemyAfterDelay(enemySpawnDelay));
     }
