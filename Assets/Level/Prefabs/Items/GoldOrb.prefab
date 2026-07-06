@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5868991571858634116
+--- !u!1 &1951379743092940287
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7968577174306008716}
-  - component: {fileID: 4051875137813609838}
-  - component: {fileID: 666575590033016477}
-  - component: {fileID: 5345977236568558429}
+  - component: {fileID: 7059776847973931300}
+  - component: {fileID: 3433196971390945050}
+  - component: {fileID: 579559770978693334}
+  - component: {fileID: 376855690648995691}
+  - component: {fileID: 2072781544591668534}
   m_Layer: 0
-  m_Name: SM_ring Variant
+  m_Name: GoldOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7968577174306008716
+--- !u!4 &7059776847973931300
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5868991571858634116}
+  m_GameObject: {fileID: 1951379743092940287}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -27.13809, y: 0, z: -24.37341}
@@ -34,21 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4051875137813609838
+--- !u!33 &3433196971390945050
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5868991571858634116}
-  m_Mesh: {fileID: 1030494789306771777, guid: 97b0e6f840a1633458392223fa84f12a, type: 3}
---- !u!23 &666575590033016477
+  m_GameObject: {fileID: 1951379743092940287}
+  m_Mesh: {fileID: 4711208715938537054, guid: 3bc3640eeaa93164c913b92f0c307232, type: 3}
+--- !u!23 &579559770978693334
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5868991571858634116}
+  m_GameObject: {fileID: 1951379743092940287}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +69,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c942d41f52344754293cddcc0d6f22ce, type: 2}
-  - {fileID: 2100000, guid: 8dac32eb542932245bbeb324fc26d651, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,18 +92,39 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5345977236568558429
+--- !u!114 &376855690648995691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5868991571858634116}
+  m_GameObject: {fileID: 1951379743092940287}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 803ca16c0be5be944a331ecb4216bb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  cashValue: 50
+  cashValue: 250
   itemName: Default Item
-  holdDuration: 0
+  holdDuration: 2.5
+--- !u!135 &2072781544591668534
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951379743092940287}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

@@ -165,7 +165,22 @@ MonoBehaviour:
   maxExitDepth: 5
   maxTotalRooms: 30
   itemPrefabs:
-  - {fileID: 176346380637014204, guid: cd638ecfa18a7744cb85fc1d3835e84f, type: 3}
+  - {fileID: 6875060824737412629, guid: 1a873eba975a18540b6c5d904ef8a409, type: 3}
+  - {fileID: 8052569337313428246, guid: 75577cb9dbe56de4bbf6c151db1abc9e, type: 3}
+  - {fileID: 4092530727678459436, guid: 8d6bf320490770842b0ec0dd07f58f75, type: 3}
+  - {fileID: 8767433570765622975, guid: 889941d70bd119c4b899987ce124bb71, type: 3}
+  - {fileID: 3887311627284450027, guid: 4836f5ae6f2e04e41a3a3f613099ae5a, type: 3}
+  - {fileID: 7203496548731366029, guid: 1c178b2f54535c448ae0f9efd1d851d0, type: 3}
+  - {fileID: 5902337460202850668, guid: 1c8ee520785eb054b8867324c2833293, type: 3}
+  - {fileID: 758781857778581740, guid: b96d4d63274df374dab3f69bf5bfca89, type: 3}
+  - {fileID: 1523529867756979896, guid: 23445edfcee7b424b9eec125ba5d7adb, type: 3}
+  - {fileID: 8401876240406768769, guid: afd6285f35e96b24c914725f3c2274e7, type: 3}
+  - {fileID: 5840226516803207398, guid: 57e20a5081b88f54cbb064f0ba1d7085, type: 3}
+  - {fileID: 1951379743092940287, guid: 0d703bc405cf3704284fc717e7978ee6, type: 3}
+  - {fileID: 5868991571858634116, guid: 6df3d2adfb057c047992a71e61086fd8, type: 3}
+  - {fileID: 1622831357641600569, guid: f7d004944012c8f4eb1bf4954f7b933d, type: 3}
+  - {fileID: 8083045551069436444, guid: 1e366a63c2989d84f864035b94e18f46, type: 3}
+  - {fileID: 6117588235476292716, guid: 8c9532730e1d4b243be85e39987e12f4, type: 3}
   spawnChance: 0.5
   navMeshSurface: {fileID: 0}
 --- !u!4 &957887068

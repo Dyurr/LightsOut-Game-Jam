@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1523529867756979896
+--- !u!1 &5840226516803207398
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2913677783100391718}
-  - component: {fileID: 1397225392605108805}
-  - component: {fileID: 3344679282370263116}
-  - component: {fileID: 3291601617487632889}
+  - component: {fileID: 5829038502847602087}
+  - component: {fileID: 3769036300075790484}
+  - component: {fileID: 4953898789324588774}
+  - component: {fileID: 8075583766769923936}
+  - component: {fileID: -4205573919685466355}
   m_Layer: 0
-  m_Name: SM_ingot Variant
+  m_Name: DiamondNecklace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2913677783100391718
+--- !u!4 &5829038502847602087
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523529867756979896}
+  m_GameObject: {fileID: 5840226516803207398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -27.13809, y: 0, z: -24.37341}
@@ -34,21 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1397225392605108805
+--- !u!33 &3769036300075790484
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523529867756979896}
-  m_Mesh: {fileID: -3009202566149491304, guid: 4a39d8107f6c51d43bf68fd282f50abb, type: 3}
---- !u!23 &3344679282370263116
+  m_GameObject: {fileID: 5840226516803207398}
+  m_Mesh: {fileID: 4824045906693784667, guid: c4117ab1f09cdfd4298936476c570565, type: 3}
+--- !u!23 &4953898789324588774
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523529867756979896}
+  m_GameObject: {fileID: 5840226516803207398}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,6 +69,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c942d41f52344754293cddcc0d6f22ce, type: 2}
+  - {fileID: 2100000, guid: 8dac32eb542932245bbeb324fc26d651, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,18 +93,39 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3291601617487632889
+--- !u!114 &8075583766769923936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523529867756979896}
+  m_GameObject: {fileID: 5840226516803207398}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 803ca16c0be5be944a331ecb4216bb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  cashValue: 50
+  cashValue: 70
   itemName: Default Item
-  holdDuration: 0
+  holdDuration: 0.6
+--- !u!135 &-4205573919685466355
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5840226516803207398}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
