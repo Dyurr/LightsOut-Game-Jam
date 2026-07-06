@@ -273,9 +273,9 @@ MonoBehaviour:
   - {fileID: 5355269804950970276, guid: 206e91ae7880774468a4bc7127a88fb7, type: 3}
   endRoomPrefab: {fileID: 3614751089448150224, guid: d548f8b91ba8b8a4391dea1985a95672, type: 3}
   wallCapPrefab: {fileID: 6171150641940509250, guid: f64e1e5c03d912b4c8816d388ff9ea8c, type: 3}
-  minDeadEndDepth: 1
+  minDeadEndDepth: 3
   maxDeadEndDepth: 5
-  minExitDepth: 3
+  minExitDepth: 1
   maxExitDepth: 5
   maxTotalRooms: 30
   itemPrefabs:
