@@ -11,7 +11,7 @@ public class GameCompleteController : MonoBehaviour
 
     private void Start()
     {
-        int finalScore = PlayerWallet.Instance != null ? PlayerWallet.Instance.totalCash : 0;
+        int finalScore = PlayerWallet.totalCash;
         cashText.text = $"You escaped with ${finalScore}";
     }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 public class PlayerWallet : MonoBehaviour
 {
-    public int totalCash { get; private set; }
+    public static int totalCash { get; private set; }
 
     public event Action<int> onCashChanged;
 
@@ -10,11 +10,7 @@ public class PlayerWallet : MonoBehaviour
 
     public static PlayerWallet Instance;
 
-    private void Awake()
-    {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+
 
     public void AddCash(int amount)
     {
